@@ -7,11 +7,14 @@ export default function Home() {
   function toLightPage() {
     history.push("/Light");
   }
+  function toServoPage() {
+    history.push("/Servo");
+  }
   return (
     <div>
       <Button onClick={toLightPage}>Đèn</Button>
       <Button>Quạt</Button>
-      <Button>Cửa</Button>
+      <Button onClick={toServoPage}>Cửa</Button>
       <Button>Xem biểu đồ nhiệt</Button>
       <Button>Xem biểu đồ gas</Button>
     </div>

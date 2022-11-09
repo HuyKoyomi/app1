@@ -2,6 +2,7 @@
 import { Button, message, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 // import './Login.css'
 
@@ -144,12 +145,59 @@ function Login() {
         break;
     }
   };
-
+  useEffect(() => {
+    getServoMode();
+  }, []);
+  // API
+  const Thaotac_ServoMode = async (value) => {
+    axios({
+      method: "post",
+      url: "http://localhost:8080/addServoMode",
+      data: {
+        mode: value,
+      },
+    })
+      .then((res) => {
+        getServoMode();
+      })
+      .catch((err) => {
+        console.log("Đây là lỗi", err);
+      });
+  };
+  const [ServoMode, setServoMode] = useState("0");
+  const getServoMode = async () => {
+    axios({
+      method: "get",
+      url: "http://localhost:8080/getfinalServoMode",
+    })
+      .then((res) => {
+        setServoMode(res?.data[0]?.mode);
+        console.log("Format", Format(res?.data[0]?.mode));
+      })
+      .catch((err) => {
+        console.log("Đây là lỗi", err);
+      });
+  };
   return (
     <div className="face-authentication-by-trungquandev flex fdc jcfc aic">
-      <h1>Đăng nhập</h1>
-      {/* <button className="action face-registration" onClick={faceRegistration}>Face Registration</button> */}
-      {!a ? (
+      <h1>Trạng thái: {Format(ServoMode)}</h1>
+      <Button
+        disabled={ServoMode == "1" ? true : false}
+        onClick={(e) => {
+          Thaotac_ServoMode("1");
+        }}
+      >
+        Đóng cửa
+      </Button>
+      <Button
+        disabled={ServoMode == "0" ? true : false}
+        onClick={(e) => {
+          Thaotac_ServoMode("0");
+        }}
+      >
+        Mở cửa
+      </Button>
+      {/* {!a ? (
         <>
         <Button className="action face-sign-in" onClick={faceSignIn}>
           Đăng nhập
@@ -158,9 +206,18 @@ function Login() {
         </>
       ) : (
         <>Hello</>
-      )}
+      )} */}
     </div>
   );
 }
 
 export default Login;
+function Format(value) {
+  // eslint-disable-next-line default-case
+  switch (value) {
+    case "1":
+      return "Mở cửa";
+    case "0":
+      return "Đóng cửa";
+  }
+}

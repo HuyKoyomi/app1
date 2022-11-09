@@ -88,22 +88,22 @@ export default function Light() {
     <div>
       <h1>Trạng thái: {Format(LightMode)}</h1>
       <Button
-        disabled={LightMode == "1" ? true : false}
-        onClick={(e) => {
-          Thaotac_LightMode("1");
-        }}
-      >
-        Tự động
-      </Button>
-      <Button
         disabled={LightMode == "0" ? true : false}
         onClick={(e) => {
           Thaotac_LightMode("0");
         }}
       >
+        Tự động
+      </Button>
+      <Button
+        disabled={LightMode == "1" ? true : false}
+        onClick={(e) => {
+          Thaotac_LightMode("1");
+        }}
+      >
         Thủ công
       </Button>
-      {LightMode == 0 ? (
+      {LightMode == 1 ? (
         <div>
           <h1>Đèn đang được: {FormatManualLight(ManualLight)}</h1>
           <Button
@@ -133,9 +133,9 @@ export default function Light() {
 function Format(value) {
   // eslint-disable-next-line default-case
   switch (value) {
-    case "1":
-      return "Tự động";
     case "0":
+      return "Tự động";
+    case "1":
       return "Thủ công";
   }
 }
