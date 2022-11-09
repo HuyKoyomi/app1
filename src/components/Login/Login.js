@@ -182,17 +182,17 @@ function Login() {
     <div className="face-authentication-by-trungquandev flex fdc jcfc aic">
       <h1>Trạng thái: {Format(ServoMode)}</h1>
       <Button
-        disabled={ServoMode == "1" ? true : false}
+        disabled={ServoMode == "0" ? true : false}
         onClick={(e) => {
-          Thaotac_ServoMode("1");
+          Thaotac_ServoMode("0");
         }}
       >
         Đóng cửa
       </Button>
       <Button
-        disabled={ServoMode == "0" ? true : false}
+        disabled={ServoMode == "1" ? true : false}
         onClick={(e) => {
-          Thaotac_ServoMode("0");
+          Thaotac_ServoMode("1");
         }}
       >
         Mở cửa
