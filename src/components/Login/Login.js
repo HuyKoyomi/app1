@@ -152,7 +152,7 @@ function Login() {
   const Thaotac_ServoMode = async (value) => {
     axios({
       method: "post",
-      url: "http://localhost:8080/addServoMode",
+      url: "http://localhost:8080/addservomode",
       data: {
         mode: value,
       },
@@ -168,7 +168,7 @@ function Login() {
   const getServoMode = async () => {
     axios({
       method: "get",
-      url: "http://localhost:8080/getfinalServoMode",
+      url: "http://localhost:8080/getfinalservomode",
     })
       .then((res) => {
         setServoMode(res?.data[0]?.mode);
@@ -215,9 +215,9 @@ export default Login;
 function Format(value) {
   // eslint-disable-next-line default-case
   switch (value) {
-    case "1":
-      return "Mở cửa";
     case "0":
+      return "Mở cửa";
+    case "1":
       return "Đóng cửa";
   }
 }
