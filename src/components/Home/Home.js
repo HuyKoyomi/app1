@@ -10,10 +10,13 @@ export default function Home() {
   function toServoPage() {
     history.push("/Servo");
   }
+  function toPanPage() {
+    history.push("/Pan");
+  }
   return (
     <div>
       <Button onClick={toLightPage}>Đèn</Button>
-      <Button>Quạt</Button>
+      <Button onClick={toPanPage}>Quạt</Button>
       <Button onClick={toServoPage}>Cửa</Button>
       <Button>Xem biểu đồ nhiệt</Button>
       <Button>Xem biểu đồ gas</Button>
