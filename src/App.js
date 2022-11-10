@@ -6,6 +6,7 @@ import Home from './components/Home/Home';
 import Register from './components/Register/Register';
 import Light from './components/Light/Light';
 import Pan from './components/Pan/Pan';
+import Gas from './components/Gas/Gas';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/Servo" exact component={Login} />
           <Route path="/Pan" exact component={Pan} />
           <Route path="/Register" exact component={Register} />
+          <Route path="/Gas" exact component={Gas} />
         </Switch>
       </Router>
     </div>
