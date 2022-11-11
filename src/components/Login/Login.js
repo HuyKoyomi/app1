@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-import { Button, message, Modal } from "antd";
+import { Button, Col, message, Modal, Row } from "antd";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 // import './Login.css'
@@ -12,10 +12,10 @@ function Login() {
   let faceioInstance = null;
   // const history = useHistory();
 
-  const [a, setA] = useState(false);
-  useEffect(() => {
-    console.log("state", a);
-  }, [a]);
+  // const [a, setA] = useState(false);
+  // useEffect(() => {
+  //   console.log("state", a);
+  // }, [a]);
 
   useEffect(() => {
     const faceIoScript = document.createElement("script");
@@ -48,7 +48,7 @@ function Login() {
 
       console.log("Unique Facial ID: ", userData.facialId);
       console.log("PayLoad: ", userData.payload);
-      history.push("/home");
+      Thaotac_ServoMode("1");
     } catch (errorCode) {
       console.log(errorCode);
       handleError(errorCode);
@@ -179,34 +179,24 @@ function Login() {
       });
   };
   return (
-    <div className="face-authentication-by-trungquandev flex fdc jcfc aic">
-      <h1>Trạng thái: {Format(ServoMode)}</h1>
-      <Button
-        disabled={ServoMode == "0" ? true : false}
-        onClick={(e) => {
-          Thaotac_ServoMode("0");
-        }}
-      >
-        Đóng cửa
-      </Button>
-      <Button
-        disabled={ServoMode == "1" ? true : false}
-        onClick={(e) => {
-          Thaotac_ServoMode("1");
-        }}
-      >
-        Mở cửa
-      </Button>
-      {/* {!a ? (
-        <>
-        <Button className="action face-sign-in" onClick={faceSignIn}>
-          Đăng nhập
+    <div>
+      <div>
+        <h1>Trạng thái: {Format(ServoMode)}</h1>
+        <Button
+          disabled={ServoMode == "0" ? true : false}
+          onClick={(e) => {
+            Thaotac_ServoMode("0");
+          }}
+        >
+          <Link to="/Servo">Đóng cửa</Link>
         </Button>
-        <Button onClick={e => history.push('/register')}>Đăng ký</Button>
-        </>
-      ) : (
-        <>Hello</>
-      )} */}
+        <Button disabled={ServoMode == "1" ? true : false} onClick={faceSignIn}>
+          Mở cửa
+        </Button>
+      </div>
+      <div style={{marginTop: 30}}>
+        <Button onClick={(e) => history.push("/Home")}>Quay lại</Button>
+      </div>
     </div>
   );
 }

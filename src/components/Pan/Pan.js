@@ -1,9 +1,11 @@
 import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Pan() {
   const [FanMode, setFanMode] = useState("0");
+  const history = useHistory();
 
   useEffect(() => {
     getFanMode();
@@ -42,23 +44,28 @@ export default function Pan() {
 
   return (
     <div>
-      <h1>Trạng thái: {Format(FanMode)}</h1>
-      <Button
-        disabled={FanMode == "0" ? true : false}
-        onClick={(e) => {
-          Thaotac_FanMode("0");
-        }}
-      >
-        Bật
-      </Button>
-      <Button
-        disabled={FanMode == "1" ? true : false}
-        onClick={(e) => {
-          Thaotac_FanMode("1");
-        }}
-      >
-        Tắt
-      </Button>
+      <div>
+        <h1>Trạng thái: {Format(FanMode)}</h1>
+        <Button
+          disabled={FanMode == "0" ? true : false}
+          onClick={(e) => {
+            Thaotac_FanMode("0");
+          }}
+        >
+          Bật
+        </Button>
+        <Button
+          disabled={FanMode == "1" ? true : false}
+          onClick={(e) => {
+            Thaotac_FanMode("1");
+          }}
+        >
+          Tắt
+        </Button>
+      </div>
+      <div style={{ marginTop: 30 }}>
+        <Button onClick={(e) => history.push("/Home")}>Quay lại</Button>
+      </div>
     </div>
   );
 }
@@ -72,4 +79,3 @@ function Format(value) {
       return "Tắt";
   }
 }
-

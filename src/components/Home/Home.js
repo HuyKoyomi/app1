@@ -2,10 +2,19 @@ import { Button, Col, Row } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import Gas from "../Gas/Gas";
+
+import { Howl, Howler } from "howler";
+import soundurl from "../../music/Bao_dong1.mp3";
+import ReactHowler from "react-howler";
 
 export default function Home() {
   const history = useHistory();
+  const [loop, setLoop] = useState(true);
+  var sound = new Howl({
+    src: soundurl,
+    loop: false,
+  });
+
   function toLightPage() {
     history.push("/Light");
   }
@@ -20,6 +29,7 @@ export default function Home() {
   const [tmp, setTmp] = useState(true);
   useEffect(() => {
     getGas();
+    //sound.play();
   }, []);
   useEffect(() => {
     getGas();
@@ -32,7 +42,11 @@ export default function Home() {
     })
       .then((res) => {
         setGas(res?.data[0]?.level);
-        // setGas(1);
+        console.log("res?.data[0]?.level", res?.data[0]?.level);
+        console.log("loop", loop);
+        if (res?.data[0]?.level == 0) {
+          // sound.play();
+        }
         console.log(res?.data);
         setTmp(!tmp);
       })
@@ -46,6 +60,7 @@ export default function Home() {
     }
     return "white";
   }
+
   return (
     <Row
       style={{
@@ -99,6 +114,28 @@ export default function Home() {
           <Button style={{ width: 200 }} disabled={Gas == 3 ? true : false}>
             Xem biểu đồ gas
           </Button>
+        </Row>
+        <Row>
+          <Button
+            style={{ width: 200, marginTop: 30 }}
+            onClick={(e) => history.push("/")}
+          >
+            Đăng xuất
+          </Button>
+          <Button
+            style={{ width: 200, marginTop: 30 }}
+            onClick={(e) => {
+              alert("off");
+              sound.onstop();
+            }}
+          >
+            Tắt
+          </Button>
+          {/* <ReactHowler
+            src={soundurl}
+            playing={true}
+            // loop={false}
+          /> */}
         </Row>
       </Col>
       <Col span={5}>

@@ -1,11 +1,12 @@
 import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Light() {
   const [LightMode, setLightMode] = useState("0");
   const [ManualLight, setManualLight] = useState("0");
-
+  const history = useHistory();
   useEffect(() => {
     getLightMode();
   }, []);
@@ -86,46 +87,51 @@ export default function Light() {
   };
   return (
     <div>
-      <h1>Trạng thái: {Format(LightMode)}</h1>
-      <Button
-        disabled={LightMode == "0" ? true : false}
-        onClick={(e) => {
-          Thaotac_LightMode("0");
-        }}
-      >
-        Tự động
-      </Button>
-      <Button
-        disabled={LightMode == "1" ? true : false}
-        onClick={(e) => {
-          Thaotac_LightMode("1");
-        }}
-      >
-        Thủ công
-      </Button>
-      {LightMode == 1 ? (
-        <div>
-          <h1>Đèn đang được: {FormatManualLight(ManualLight)}</h1>
-          <Button
-            disabled={ManualLight == "0" ? true : false}
-            onClick={(e) => {
-              Thaotac_ManualLight("0");
-            }}
-          >
-            Tắt
-          </Button>
-          <Button
-            disabled={ManualLight == "1" ? true : false}
-            onClick={(e) => {
-              Thaotac_ManualLight("1");
-            }}
-          >
-            Bật
-          </Button>
-        </div>
-      ) : (
-        <></>
-      )}
+      <div>
+        <h1>Trạng thái: {Format(LightMode)}</h1>
+        <Button
+          disabled={LightMode == "0" ? true : false}
+          onClick={(e) => {
+            Thaotac_LightMode("0");
+          }}
+        >
+          Tự động
+        </Button>
+        <Button
+          disabled={LightMode == "1" ? true : false}
+          onClick={(e) => {
+            Thaotac_LightMode("1");
+          }}
+        >
+          Thủ công
+        </Button>
+        {LightMode == 1 ? (
+          <div>
+            <h1>Đèn đang được: {FormatManualLight(ManualLight)}</h1>
+            <Button
+              disabled={ManualLight == "0" ? true : false}
+              onClick={(e) => {
+                Thaotac_ManualLight("0");
+              }}
+            >
+              Tắt
+            </Button>
+            <Button
+              disabled={ManualLight == "1" ? true : false}
+              onClick={(e) => {
+                Thaotac_ManualLight("1");
+              }}
+            >
+              Bật
+            </Button>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
+      <div style={{ marginTop: 30 }}>
+        <Button onClick={(e) => history.push("/Home")}>Quay lại</Button>
+      </div>
     </div>
   );
 }
