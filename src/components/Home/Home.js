@@ -5,11 +5,10 @@ import { useHistory } from "react-router-dom";
 
 import { Howl, Howler } from "howler";
 import soundurl from "../../music/Bao_dong1.mp3";
-import ReactHowler from "react-howler";
+import _ from "lodash";
 
 export default function Home() {
   const history = useHistory();
-  const [loop, setLoop] = useState(true);
   var sound = new Howl({
     src: soundurl,
     loop: false,
@@ -25,16 +24,7 @@ export default function Home() {
     history.push("/Pan");
   }
   //----------------------------------
-  const [Gas, setGas] = useState("0");
-  const [tmp, setTmp] = useState(true);
-  useEffect(() => {
-    getGas();
-    //sound.play();
-  }, []);
-  useEffect(() => {
-    getGas();
-  }, [tmp]);
-
+  const [Gas, setGas] = useState(0);
   const getGas = async () => {
     axios({
       method: "get",
@@ -42,13 +32,10 @@ export default function Home() {
     })
       .then((res) => {
         setGas(res?.data[0]?.level);
-        console.log("res?.data[0]?.level", res?.data[0]?.level);
-        console.log("loop", loop);
-        if (res?.data[0]?.level == 0) {
-          // sound.play();
+        console.log(`${currentCount} - level`, res?.data[0]?.level);
+        if (res?.data[0]?.level == status) {
+          sound.play();
         }
-        console.log(res?.data);
-        setTmp(!tmp);
       })
       .catch((err) => {
         console.log("Đây là lỗi", err);
@@ -61,6 +48,18 @@ export default function Home() {
     return "white";
   }
 
+  //---------------------------------------
+  const [currentCount, setCount] = useState(-1);
+  const timer = () => setCount(currentCount + 1);
+  const [status, setStatus] = useState(3)
+  useEffect(() => {
+    const id = setInterval(timer, 2000);
+    return () => {
+      clearInterval(id);
+      getGas();
+    };
+  }, [currentCount]);
+
   return (
     <Row
       style={{
@@ -70,6 +69,7 @@ export default function Home() {
         height: 1000,
       }}
     >
+      {/* <div>{currentCount}</div> */}
       <Col offset={5} span={5}>
         <Button
           style={{ width: 200, backgroundColor: Gas == 1 ? "orange" : "white" }}
@@ -122,20 +122,14 @@ export default function Home() {
           >
             Đăng xuất
           </Button>
+        </Row>
+        <Row>
           <Button
             style={{ width: 200, marginTop: 30 }}
-            onClick={(e) => {
-              alert("off");
-              sound.onstop();
-            }}
+            onClick={(e) => setStatus(4)}
           >
-            Tắt
+            Tắt cảnh báo gas
           </Button>
-          {/* <ReactHowler
-            src={soundurl}
-            playing={true}
-            // loop={false}
-          /> */}
         </Row>
       </Col>
       <Col span={5}>
