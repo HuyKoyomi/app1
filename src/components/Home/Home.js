@@ -97,11 +97,21 @@ export default function Home() {
     >
       {/* <div>{currentCount}</div> */}
       <Col offset={5} span={5}>
-        <Button
-          style={{ width: 200, backgroundColor: Gas == 1 ? "orange" : "white" }}
-        >
-          <a href="https://www.facebook.com/">Gas</a>
-        </Button>
+        <Row>
+          <Col>
+            <Button
+              style={{
+                width: 200,
+                backgroundColor: Gas == 1 ? "orange" : "white",
+              }}
+            >
+              <a href="https://www.facebook.com/">Gas</a>
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col>Level : {Gas}</Col>
+        </Row>
       </Col>
       <Col>
         <Row>
