@@ -42,16 +42,31 @@ export default function Home() {
       });
   };
   function getBackGroundColor() {
-    if (Gas == 2 || Gas == 3) {
+    if (Gas == 1 || Gas == 3) {
       return "red";
     }
     return "white";
   }
+  const [nhietdo, setNhietdo] = useState({});
 
+  const getNhietDo_DoAm = () => {
+    axios({
+      method: "get",
+      url: "http://localhost:8080/getfinaltemhum",
+    })
+      .then((res) => {
+        // console.log(res.data);
+        console.log(`${currentCount1} - level`, res?.data[0]);
+        setNhietdo(res.data[0]);
+      })
+      .catch((err) => {
+        console.log("Đây là lỗi", err);
+      });
+  };
   //---------------------------------------
-  const [currentCount, setCount] = useState(-1);
+  const [currentCount, setCount] = useState(0);
   const timer = () => setCount(currentCount + 1);
-  const [status, setStatus] = useState(3)
+  const [status, setStatus] = useState(1);
   useEffect(() => {
     const id = setInterval(timer, 2000);
     return () => {
@@ -59,6 +74,17 @@ export default function Home() {
       getGas();
     };
   }, [currentCount]);
+  // DO do am nhiet do
+
+  const [currentCount1, setCount1] = useState(0);
+  const timer1 = () => setCount1(currentCount1 + 1);
+  useEffect(() => {
+    const id1 = setInterval(timer1, 5000);
+    return () => {
+      clearInterval(id1);
+      getNhietDo_DoAm();
+    };
+  }, [currentCount1]);
 
   return (
     <Row
@@ -132,10 +158,23 @@ export default function Home() {
           </Button>
         </Row>
       </Col>
-      <Col span={5}>
-        <Button style={{ width: 200 }} disabled={Gas == 3 ? true : false}>
-          <a href="https://www.facebook.com/">Nhiệt độ</a>
-        </Button>
+      <Col span={5} offset={2}>
+        <Row>
+          <Col>
+            <Button style={{ width: 200 }} disabled={Gas == 3 ? true : false}>
+              <a href="https://www.facebook.com/">Nhiệt độ</a>
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col>Nhiệt độ: {nhietdo?.temperature} độ C</Col>
+        </Row>
+        <Row>
+          <Col>Độ ẩm: {nhietdo?.humidity} %</Col>
+        </Row>
+        <Row>
+          <Col>Lời khuyên : {nhietdo.notification}</Col>
+        </Row>
       </Col>
     </Row>
   );
