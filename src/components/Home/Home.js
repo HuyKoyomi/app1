@@ -105,7 +105,7 @@ export default function Home() {
                 backgroundColor: Gas == 1 ? "orange" : "white",
               }}
             >
-              <a href="https://www.facebook.com/">Gas</a>
+              <a href="http://127.0.0.1:8050/">Gas</a>
             </Button>
           </Col>
         </Row>
@@ -172,7 +172,7 @@ export default function Home() {
         <Row>
           <Col>
             <Button style={{ width: 200 }} disabled={Gas == 3 ? true : false}>
-              <a href="https://www.facebook.com/">Nhiệt độ</a>
+              <a href="http://127.0.0.1:8050/">Nhiệt độ</a>
             </Button>
           </Col>
         </Row>
